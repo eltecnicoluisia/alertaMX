@@ -91,7 +91,7 @@ export default function AlertPanel({ activeEvents, systemStatus, onTestAlert, on
                     href={`https://wa.me/5216863706972?text=🚨 *ALERTA EN SISTEMA* 🚨%0ASe ha detectado: *${config.label.toUpperCase()}*%0ALocalización: ${alert.location}%0ADetalle: ${alert.value}`} 
                     target="_blank" rel="noopener noreferrer" className="btn-whatsapp" style={{ marginTop: 0, padding: '8px', fontSize: '0.8rem' }}
                   >
-                    <PhoneCall size={14} /> Contacto
+                    <PhoneCall size={14} /> Vanesa
                   </a>
                 </div>
               </div>
