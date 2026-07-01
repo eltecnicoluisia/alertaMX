@@ -68,15 +68,32 @@ export default function AlertPanel({ activeEvents, systemStatus, onTestAlert, on
                 </div>
                 
                 {/* Botón de Emergencia WhatsApp */}
-                <a 
-                  href="https://wa.me/520000000000?text=Hola,%20hay%20una%20alerta%20activa%20en%20el%20sistema%20GeoAlert." 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="btn-whatsapp"
-                >
-                  <PhoneCall size={18} />
-                  Llamada WhatsApp
-                </a>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginTop: '12px' }}>
+                  <a 
+                    href={`https://wa.me/5215511964285?text=🚨 *ALERTA EN SISTEMA* 🚨%0ASe ha detectado: *${config.label.toUpperCase()}*%0ALocalización: ${alert.location}%0ADetalle: ${alert.value}`} 
+                    target="_blank" rel="noopener noreferrer" className="btn-whatsapp" style={{ marginTop: 0, padding: '8px', fontSize: '0.8rem' }}
+                  >
+                    <PhoneCall size={14} /> Dalvis
+                  </a>
+                  <a 
+                    href={`https://wa.me/526862267018?text=🚨 *ALERTA EN SISTEMA* 🚨%0ASe ha detectado: *${config.label.toUpperCase()}*%0ALocalización: ${alert.location}%0ADetalle: ${alert.value}`} 
+                    target="_blank" rel="noopener noreferrer" className="btn-whatsapp" style={{ marginTop: 0, padding: '8px', fontSize: '0.8rem' }}
+                  >
+                    <PhoneCall size={14} /> Yndira
+                  </a>
+                  <a 
+                    href={`https://wa.me/526862827516?text=🚨 *ALERTA EN SISTEMA* 🚨%0ASe ha detectado: *${config.label.toUpperCase()}*%0ALocalización: ${alert.location}%0ADetalle: ${alert.value}`} 
+                    target="_blank" rel="noopener noreferrer" className="btn-whatsapp" style={{ marginTop: 0, padding: '8px', fontSize: '0.8rem' }}
+                  >
+                    <PhoneCall size={14} /> Anais
+                  </a>
+                  <a 
+                    href={`https://wa.me/5216863706972?text=🚨 *ALERTA EN SISTEMA* 🚨%0ASe ha detectado: *${config.label.toUpperCase()}*%0ALocalización: ${alert.location}%0ADetalle: ${alert.value}`} 
+                    target="_blank" rel="noopener noreferrer" className="btn-whatsapp" style={{ marginTop: 0, padding: '8px', fontSize: '0.8rem' }}
+                  >
+                    <PhoneCall size={14} /> Contacto
+                  </a>
+                </div>
               </div>
             );
           })
