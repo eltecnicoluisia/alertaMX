@@ -146,7 +146,7 @@ function App() {
     if ('Notification' in window && Notification.permission === 'granted') {
       new Notification(title, {
         body,
-        icon: './favicon.svg',
+        icon: '/pwa-192x192.png',
         vibrate: [200, 100, 200, 100, 200]
       });
     }
