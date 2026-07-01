@@ -99,6 +99,18 @@ export default function AlertPanel({ activeEvents, systemStatus, onTestAlert, on
                   >
                     <PhoneCall size={14} /> Vanesa
                   </a>
+                  <a 
+                    href={`https://wa.me/522224658452?text=🚨 *ALERTA EN SISTEMA* 🚨%0ASe ha detectado: *${config.label.toUpperCase()}*%0ALocalización: ${alert.location}%0ADetalle: ${alert.value}`} 
+                    target="_blank" rel="noopener noreferrer" className="btn-whatsapp" style={{ marginTop: 0, padding: '8px', fontSize: '0.8rem' }}
+                  >
+                    <PhoneCall size={14} /> Josh
+                  </a>
+                  <a 
+                    href={`https://wa.me/526862827516?text=🚨 *ALERTA EN SISTEMA* 🚨%0ASe ha detectado: *${config.label.toUpperCase()}*%0ALocalización: ${alert.location}%0ADetalle: ${alert.value}`} 
+                    target="_blank" rel="noopener noreferrer" className="btn-whatsapp" style={{ marginTop: 0, padding: '8px', fontSize: '0.8rem' }}
+                  >
+                    <PhoneCall size={14} /> Carlos
+                  </a>
                 </div>
               </div>
             );
