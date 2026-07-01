@@ -104,6 +104,22 @@ body {
   animation: pulse-ring 2s infinite;
 }
 
+.city-marker {
+  width: 14px; height: 14px;
+  background-color: var(--color-level-low);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--color-level-low);
+  border: 2px solid white;
+  position: relative;
+}
+.city-marker::after {
+  content: ''; position: absolute;
+  top: -4px; left: -4px; right: -4px; bottom: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--color-level-low);
+  animation: pulse-ring 3s infinite;
+}
+
 /* Map Theming */
 .leaflet-container { background: var(--color-bg-base) !important; }
 .leaflet-layer, .leaflet-control-zoom-in, .leaflet-control-zoom-out, .leaflet-control-attribution {

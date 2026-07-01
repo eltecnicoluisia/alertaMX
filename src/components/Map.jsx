@@ -68,14 +68,45 @@ export default function EarthquakeMap({ activeEvents, userLocation }) {
 
         {/* User Location or Default Cities */}
         {userLocation ? (
-          <Marker position={[userLocation.lat, userLocation.lng]}>
-            <Popup><strong>{userLocation.name}</strong><br/>Monitoreo Activo</Popup>
-          </Marker>
+          <React.Fragment>
+            <Circle 
+              center={[userLocation.lat, userLocation.lng]}
+              pathOptions={{ fillColor: '#10b981', fillOpacity: 0.05, color: '#10b981', weight: 2, dashArray: '5, 10' }}
+              radius={300000} 
+            />
+            <Marker 
+              position={[userLocation.lat, userLocation.lng]}
+              icon={new L.DivIcon({ className: 'city-marker-container', html: '<div class="city-marker"></div>', iconSize: [14, 14], iconAnchor: [7, 7] })}
+            >
+              <Popup><strong>{userLocation.name}</strong><br/>Radio de Monitoreo: 300km</Popup>
+            </Marker>
+          </React.Fragment>
         ) : (
           defaultCities.map((city, idx) => (
-            <Marker key={idx} position={[city.lat, city.lng]}>
-              <Popup><strong>{city.name}</strong><br/>Monitoreo Activo</Popup>
-            </Marker>
+            <React.Fragment key={idx}>
+              <Circle 
+                center={[city.lat, city.lng]}
+                pathOptions={{ 
+                  fillColor: '#10b981', 
+                  fillOpacity: 0.05, 
+                  color: '#10b981', 
+                  weight: 2, 
+                  dashArray: '5, 10' 
+                }}
+                radius={300000} // 300km radius
+              />
+              <Marker 
+                position={[city.lat, city.lng]}
+                icon={new L.DivIcon({
+                  className: 'city-marker-container',
+                  html: '<div class="city-marker"></div>',
+                  iconSize: [14, 14],
+                  iconAnchor: [7, 7],
+                })}
+              >
+                <Popup><strong>{city.name}</strong><br/>Radio de Monitoreo: 300km</Popup>
+              </Marker>
+            </React.Fragment>
           ))
         )}
 
