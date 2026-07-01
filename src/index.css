@@ -106,9 +106,9 @@ body {
 
 .city-marker {
   width: 14px; height: 14px;
-  background-color: var(--color-level-low);
+  background-color: var(--color-level-med);
   border-radius: 50%;
-  box-shadow: 0 0 10px var(--color-level-low);
+  box-shadow: 0 0 10px var(--color-level-med);
   border: 2px solid white;
   position: relative;
 }
@@ -116,7 +116,7 @@ body {
   content: ''; position: absolute;
   top: -4px; left: -4px; right: -4px; bottom: -4px;
   border-radius: 50%;
-  border: 2px solid var(--color-level-low);
+  border: 2px solid var(--color-level-med);
   animation: pulse-ring 3s infinite;
 }
 

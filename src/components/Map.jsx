@@ -40,8 +40,8 @@ function MapController({ activeEvents }) {
 
 export default function EarthquakeMap({ activeEvents, userLocation }) {
   const defaultCities = [
-    { name: 'Guadalajara, Jalisco', lat: 20.659698, lng: -103.349609 },
-    { name: 'Mexicali, Baja California', lat: 32.624538, lng: -115.452262 }
+    { name: 'Jalisco', lat: 20.659698, lng: -103.349609 },
+    { name: 'Mexicali', lat: 32.624538, lng: -115.452262 }
   ];
 
   return (
@@ -66,48 +66,39 @@ export default function EarthquakeMap({ activeEvents, userLocation }) {
         
         <MapController activeEvents={activeEvents} />
 
-        {/* User Location or Default Cities */}
-        {userLocation ? (
-          <React.Fragment>
+        {/* Default Cities (Always visible) */}
+        {defaultCities.map((city, idx) => (
+          <React.Fragment key={`city-${idx}`}>
             <Circle 
-              center={[userLocation.lat, userLocation.lng]}
-              pathOptions={{ fillColor: '#10b981', fillOpacity: 0.05, color: '#10b981', weight: 2, dashArray: '5, 10' }}
-              radius={300000} 
+              center={[city.lat, city.lng]}
+              pathOptions={{ 
+                fillColor: '#f59e0b', 
+                fillOpacity: 0.05, 
+                color: '#f59e0b', 
+                weight: 2, 
+                dashArray: '5, 10' 
+              }}
+              radius={300000} // 300km radius
             />
             <Marker 
-              position={[userLocation.lat, userLocation.lng]}
-              icon={new L.DivIcon({ className: 'city-marker-container', html: '<div class="city-marker"></div>', iconSize: [14, 14], iconAnchor: [7, 7] })}
+              position={[city.lat, city.lng]}
+              icon={new L.DivIcon({
+                className: 'city-marker-container',
+                html: '<div class="city-marker"></div>',
+                iconSize: [14, 14],
+                iconAnchor: [7, 7],
+              })}
             >
-              <Popup><strong>{userLocation.name}</strong><br/>Radio de Monitoreo: 300km</Popup>
+              <Popup><strong>{city.name}</strong><br/>Radio de Monitoreo: 300km</Popup>
             </Marker>
           </React.Fragment>
-        ) : (
-          defaultCities.map((city, idx) => (
-            <React.Fragment key={idx}>
-              <Circle 
-                center={[city.lat, city.lng]}
-                pathOptions={{ 
-                  fillColor: '#10b981', 
-                  fillOpacity: 0.05, 
-                  color: '#10b981', 
-                  weight: 2, 
-                  dashArray: '5, 10' 
-                }}
-                radius={300000} // 300km radius
-              />
-              <Marker 
-                position={[city.lat, city.lng]}
-                icon={new L.DivIcon({
-                  className: 'city-marker-container',
-                  html: '<div class="city-marker"></div>',
-                  iconSize: [14, 14],
-                  iconAnchor: [7, 7],
-                })}
-              >
-                <Popup><strong>{city.name}</strong><br/>Radio de Monitoreo: 300km</Popup>
-              </Marker>
-            </React.Fragment>
-          ))
+        ))}
+
+        {/* User Location */}
+        {userLocation && (
+          <Marker position={[userLocation.lat, userLocation.lng]}>
+            <Popup><strong>Tu Ubicación Actual</strong></Popup>
+          </Marker>
         )}
 
         {/* Render all active events */}
