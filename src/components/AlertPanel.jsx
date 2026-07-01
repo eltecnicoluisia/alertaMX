@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   Activity, AlertTriangle, ShieldCheck, MapPin, Clock, X, 
-  Waves, Flame, Tornado, Mountain, Wind
+  Waves, Flame, Tornado, Mountain, Wind, PhoneCall
 } from 'lucide-react';
 
 const hazardConfig = {
@@ -66,6 +66,17 @@ export default function AlertPanel({ activeEvents, systemStatus, onTestAlert, on
                     <span key={idx} style={{ marginRight: '8px' }}>• {detail}</span>
                   ))}
                 </div>
+                
+                {/* Botón de Emergencia WhatsApp */}
+                <a 
+                  href="https://wa.me/520000000000?text=Hola,%20hay%20una%20alerta%20activa%20en%20el%20sistema%20GeoAlert." 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="btn-whatsapp"
+                >
+                  <PhoneCall size={18} />
+                  Llamada WhatsApp
+                </a>
               </div>
             );
           })

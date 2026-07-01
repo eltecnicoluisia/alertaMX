@@ -183,6 +183,24 @@ body {
 }
 .btn-dismiss:hover { background: rgba(255,255,255,0.1); color: white; }
 
+.btn-whatsapp {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  background-color: #25D366; /* WhatsApp Green */
+  color: white;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 12px;
+  transition: background-color 0.2s, transform 0.2s;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+.btn-whatsapp:hover {
+  background-color: #128C7E;
+  transform: translateY(-2px);
+}
+
 /* Simulator Controls */
 .simulator-panel {
   padding: 16px;
