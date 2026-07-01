@@ -16,7 +16,13 @@ const hazardConfig = {
 export default function AlertPanel({ activeEvents, systemStatus, onTestAlert, onDismissAlert }) {
   
   return (
-    <div className="sidebar">
+    <div 
+      className="sidebar"
+      onTouchStart={e => e.stopPropagation()}
+      onTouchMove={e => e.stopPropagation()}
+      onTouchEnd={e => e.stopPropagation()}
+      onPointerDown={e => e.stopPropagation()}
+    >
       {/* Header Panel */}
       <div className="glass-panel header-panel">
         <div className="header-title">
@@ -107,7 +113,13 @@ export default function AlertPanel({ activeEvents, systemStatus, onTestAlert, on
       </div>
 
       {/* Simulator Controls */}
-      <div className="glass-panel simulator-panel" style={{ touchAction: 'manipulation' }}>
+      <div 
+        className="glass-panel simulator-panel"
+        onTouchStart={e => e.stopPropagation()}
+        onTouchMove={e => e.stopPropagation()}
+        onTouchEnd={e => e.stopPropagation()}
+        onPointerDown={e => e.stopPropagation()}
+      >
         <h3>Simulador de Desastres (Pruebas)</h3>
         {Object.entries(hazardConfig).map(([type, config]) => {
           const Icon = config.icon;
@@ -115,8 +127,7 @@ export default function AlertPanel({ activeEvents, systemStatus, onTestAlert, on
             <button 
               key={type} 
               className={`btn-sim ${type}`}
-              onPointerDown={() => onTestAlert(type)}
-              style={{ touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none' }}
+              onClick={() => onTestAlert(type)}
             >
               <Icon size={22} />
               {config.label}

@@ -233,7 +233,7 @@ function App() {
     }
 
     setActiveEvents(prev => [newEvent, ...prev]);
-    playAlertSound(type);
+    setTimeout(() => playAlertSound(type), 50);
   };
 
   const handleDismiss = (id) => setActiveEvents(prev => prev.filter(e => e.id !== id));
