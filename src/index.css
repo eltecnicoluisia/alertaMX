@@ -277,18 +277,18 @@ html, body {
     top: unset; left: unset; right: unset; bottom: unset;
     z-index: 100;
 
-    /* Altura fija — el mapa toma el resto */
+    /* Altura fija = el mapa ocupa el resto de la pantalla */
     flex-shrink: 0;
-    height: auto;
+    height: 52vh;
+    min-height: 300px;
 
     flex-direction: column;
     gap: 0;
     padding: 0;
     pointer-events: auto;
 
-    /* Fondo sólido oscuro — sin transparencia para evitar blanco */
     background: #161921;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 20px 20px 0 0;
     box-shadow: 0 -8px 40px rgba(0,0,0,0.8);
 
@@ -332,22 +332,26 @@ html, body {
   /* Área scrollable (alertas) */
   .alert-feed {
     flex: 1;
+    min-height: 0; /* clave: permite que flex shrink funcione */
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
-    padding: 10px 12px;
-    gap: 10px;
+    padding: 8px 12px;
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
   }
 
   .alert-feed::-webkit-scrollbar { display: none; }
 
   /* Cards dentro del feed */
   .alert-card {
-    padding: 12px 14px;
+    padding: 10px 12px;
     border-radius: 12px;
-    background: var(--color-bg-card);
+    background: rgba(30, 34, 45, 0.98);
     border: var(--glass-border);
     margin: 0;
+    flex-shrink: 0;
   }
 
   .alert-value { font-size: 1.5rem; }

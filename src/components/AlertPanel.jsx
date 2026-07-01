@@ -114,10 +114,9 @@ export default function AlertPanel({ activeEvents, systemStatus, onTestAlert, on
           return (
             <button 
               key={type} 
-              className={`btn-sim ${type}`} 
-              onPointerDown={(e) => { e.stopPropagation(); }}
-              onClick={(e) => { e.stopPropagation(); onTestAlert(type); }}
-              style={{ touchAction: 'manipulation', userSelect: 'none' }}
+              className={`btn-sim ${type}`}
+              onClick={() => onTestAlert(type)}
+              style={{ touchAction: 'manipulation', userSelect: 'none', WebkitUserSelect: 'none' }}
             >
               <Icon size={22} />
               {config.label}
