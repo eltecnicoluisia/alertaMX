@@ -107,7 +107,7 @@ export default function AlertPanel({ activeEvents, systemStatus, onTestAlert, on
       </div>
 
       {/* Simulator Controls */}
-      <div className="glass-panel simulator-panel">
+      <div className="glass-panel simulator-panel" style={{ touchAction: 'manipulation' }}>
         <h3>Simulador de Desastres (Pruebas)</h3>
         {Object.entries(hazardConfig).map(([type, config]) => {
           const Icon = config.icon;
@@ -115,9 +115,11 @@ export default function AlertPanel({ activeEvents, systemStatus, onTestAlert, on
             <button 
               key={type} 
               className={`btn-sim ${type}`} 
-              onClick={() => onTestAlert(type)}
+              onPointerDown={(e) => { e.stopPropagation(); }}
+              onClick={(e) => { e.stopPropagation(); onTestAlert(type); }}
+              style={{ touchAction: 'manipulation', userSelect: 'none' }}
             >
-              <Icon size={20} />
+              <Icon size={22} />
               {config.label}
             </button>
           );
