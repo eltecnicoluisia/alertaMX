@@ -10,8 +10,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'GeoAlert MX',
-        short_name: 'GeoAlert',
+        name: 'Alertas MX',
+        short_name: 'AlertasMX',
         description: 'Centro de Mando Multi-Alerta para Riesgos Naturales',
         theme_color: '#0f1115',
         background_color: '#0f1115',

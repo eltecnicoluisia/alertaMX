@@ -22,7 +22,7 @@ export default function AlertPanel({ activeEvents, systemStatus, onTestAlert, on
         <div className="header-title">
           <Activity size={24} color={systemStatus === 'connected' ? '#10b981' : '#f59e0b'} />
           <div>
-            <h1>GeoAlert MX</h1>
+            <h1>Alertas MX</h1>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
               <div style={{ width: 8, height: 8, borderRadius: '50%', background: systemStatus==='connected'?'#10b981':'#f59e0b' }} />
               {systemStatus === 'connected' ? 'Centro de Mando Activo' : 'Conectando...'}

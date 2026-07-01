@@ -234,7 +234,7 @@ function App() {
   if (!started) {
     return (
       <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#0f1115', color: 'white' }}>
-        <h1 style={{ fontSize: '2rem', marginBottom: '20px' }}>GeoAlert MX</h1>
+        <h1 style={{ fontSize: '2rem', marginBottom: '20px' }}>Alertas MX</h1>
         <p style={{ marginBottom: '30px', color: '#9ca3af', textAlign: 'center', maxWidth: '400px' }}>
           Esta aplicación necesita permisos de ubicación y notificaciones para avisarte a tiempo sobre riesgos naturales cercanos.
         </p>
