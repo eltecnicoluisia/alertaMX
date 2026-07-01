@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Circle, useMap, LayersControl } from 'react-leaflet';
 import L from 'leaflet';
 
 // Fix leaflet default icon issue
@@ -38,7 +38,7 @@ function MapController({ activeEvents }) {
   return null;
 }
 
-export default function EarthquakeMap({ activeEvents, userLocation, mapStyle }) {
+export default function EarthquakeMap({ activeEvents, userLocation }) {
   const defaultCities = [
     { name: 'Guadalajara, Jalisco', lat: 20.659698, lng: -103.349609 },
     { name: 'Mexicali, Baja California', lat: 32.624538, lng: -115.452262 }
@@ -53,15 +53,16 @@ export default function EarthquakeMap({ activeEvents, userLocation, mapStyle }) 
         style={{ height: '100%', width: '100%' }}
         attributionControl={false}
       >
-        {mapStyle === 'dark' ? (
-          <TileLayer
-            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-          />
-        ) : (
-          <TileLayer
-            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-          />
-        )}
+        
+        {/* Map Layers Control (Top Right) */}
+        <LayersControl position="topright">
+          <LayersControl.BaseLayer checked name="Modo Oscuro (Rendimiento)">
+            <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
+          </LayersControl.BaseLayer>
+          <LayersControl.BaseLayer name="Modo Satélite (En Vivo)">
+            <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
+          </LayersControl.BaseLayer>
+        </LayersControl>
         
         <MapController activeEvents={activeEvents} />
 

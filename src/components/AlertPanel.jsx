@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   Activity, AlertTriangle, ShieldCheck, MapPin, Clock, X, 
-  Waves, Flame, Tornado, Mountain, Wind, Globe, Map as MapIcon
+  Waves, Flame, Tornado, Mountain, Wind
 } from 'lucide-react';
 
 const hazardConfig = {
@@ -13,7 +13,7 @@ const hazardConfig = {
   air: { icon: Wind, color: 'var(--color-hazard-air)', label: 'Calidad del Aire' },
 };
 
-export default function AlertPanel({ activeEvents, systemStatus, onTestAlert, onDismissAlert, mapStyle, onToggleMap }) {
+export default function AlertPanel({ activeEvents, systemStatus, onTestAlert, onDismissAlert }) {
   
   return (
     <div className="sidebar">
@@ -23,14 +23,9 @@ export default function AlertPanel({ activeEvents, systemStatus, onTestAlert, on
           <Activity size={24} color={systemStatus === 'connected' ? '#10b981' : '#f59e0b'} />
           <div>
             <h1>GeoAlert MX</h1>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <div style={{ width: 8, height: 8, borderRadius: '50%', background: systemStatus==='connected'?'#10b981':'#f59e0b' }} />
-                {systemStatus === 'connected' ? 'Centro de Mando Activo' : 'Conectando...'}
-              </div>
-              <button className="btn-icon" onClick={onToggleMap} title="Cambiar Mapa" style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'inherit' }}>
-                {mapStyle === 'dark' ? <Globe size={18} /> : <MapIcon size={18} />}
-              </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: systemStatus==='connected'?'#10b981':'#f59e0b' }} />
+              {systemStatus === 'connected' ? 'Centro de Mando Activo' : 'Conectando...'}
             </div>
           </div>
         </div>

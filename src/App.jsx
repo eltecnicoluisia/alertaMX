@@ -25,7 +25,6 @@ function App() {
   const [systemStatus, setSystemStatus] = useState('connecting');
   const [activeEvents, setActiveEvents] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
-  const [mapStyle, setMapStyle] = useState('dark');
   
   // Ask for permissions and start the app
   const handleStart = async () => {
@@ -232,10 +231,6 @@ function App() {
   const handleDismiss = (id) => setActiveEvents(prev => prev.filter(e => e.id !== id));
   const hasCritical = activeEvents.some(e => e.severity === 'critical');
 
-  const toggleMapStyle = () => {
-    setMapStyle(prev => prev === 'dark' ? 'satellite' : 'dark');
-  };
-
   if (!started) {
     return (
       <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#0f1115', color: 'white' }}>
@@ -258,13 +253,10 @@ function App() {
         systemStatus={systemStatus}
         onTestAlert={triggerTestAlert}
         onDismissAlert={handleDismiss}
-        mapStyle={mapStyle}
-        onToggleMap={toggleMapStyle}
       />
       <EarthquakeMap 
         activeEvents={activeEvents} 
         userLocation={userLocation}
-        mapStyle={mapStyle}
       />
     </div>
   );
