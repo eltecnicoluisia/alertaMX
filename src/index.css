@@ -1,0 +1,259 @@
+:root {
+  --color-bg-base: #0f1115;
+  --color-bg-panel: rgba(22, 25, 33, 0.75);
+  --color-bg-panel-hover: rgba(30, 34, 45, 0.85);
+  
+  --color-text-main: #f3f4f6;
+  --color-text-muted: #9ca3af;
+  
+  --color-level-low: #10b981; /* Green */
+  --color-level-med: #f59e0b; /* Orange/Yellow */
+  --color-level-high: #ef4444; /* Red */
+  
+  /* Hazard Specific Colors */
+  --color-hazard-quake: #ef4444;
+  --color-hazard-tsunami: #0ea5e9; /* Light Blue */
+  --color-hazard-fire: #f97316; /* Orange */
+  --color-hazard-hurricane: #06b6d4; /* Cyan/Teal */
+  --color-hazard-volcano: #8b5cf6; /* Purple */
+  --color-hazard-air: #64748b; /* Slate Gray */
+
+  --border-radius: 16px;
+  --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --glass-blur: blur(12px);
+  
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-main);
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+#root { height: 100%; width: 100%; }
+
+/* Glassmorphism */
+.glass-panel {
+  background: var(--color-bg-panel);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  border-radius: var(--border-radius);
+  box-shadow: var(--glass-shadow);
+  transition: all 0.3s ease;
+}
+.glass-panel:hover { background: var(--color-bg-panel-hover); }
+
+/* Animations */
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(3.0); opacity: 0; }
+}
+
+@keyframes spin-slow {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes flash-screen {
+  0% { background-color: rgba(239, 68, 68, 0); }
+  50% { background-color: rgba(239, 68, 68, 0.15); }
+  100% { background-color: rgba(239, 68, 68, 0); }
+}
+
+.flash-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none; z-index: 9999;
+}
+.flash-overlay.active { animation: flash-screen 1s infinite; }
+
+/* Custom Markers on Map */
+.custom-marker { background: transparent; border: none; }
+
+.hazard-marker {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+.hazard-marker.quake { background-color: var(--color-hazard-quake); }
+.hazard-marker.tsunami { background-color: var(--color-hazard-tsunami); }
+.hazard-marker.fire { background-color: var(--color-hazard-fire); }
+.hazard-marker.hurricane { background-color: var(--color-hazard-hurricane); animation: spin-slow 4s linear infinite; }
+.hazard-marker.volcano { background-color: var(--color-hazard-volcano); animation: float 3s ease-in-out infinite; }
+.hazard-marker.air { background-color: var(--color-hazard-air); }
+
+.hazard-marker::after {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 50%;
+  border: 2px solid inherit;
+  border-color: inherit;
+  animation: pulse-ring 2s infinite;
+}
+
+/* Map Theming */
+.leaflet-container { background: var(--color-bg-base) !important; }
+.leaflet-layer, .leaflet-control-zoom-in, .leaflet-control-zoom-out, .leaflet-control-attribution {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+/* Layout */
+.app-container { display: flex; height: 100vh; width: 100vw; position: relative; }
+.map-container { flex: 1; height: 100%; }
+
+.sidebar {
+  width: 420px;
+  position: absolute; top: 20px; left: 20px; bottom: 20px;
+  z-index: 1000;
+  display: flex; flex-direction: column; gap: 16px;
+  pointer-events: none;
+}
+.sidebar > * { pointer-events: auto; }
+
+/* Header */
+.header-panel { padding: 20px; display: flex; align-items: center; justify-content: space-between; }
+.header-title { display: flex; align-items: center; gap: 12px; }
+.header-title h1 { font-size: 1.2rem; font-weight: 600; }
+
+/* Alert Feed */
+.alert-feed {
+  flex: 1;
+  overflow-y: auto;
+  display: flex; flex-direction: column; gap: 12px;
+  padding-right: 8px; /* For scrollbar */
+}
+.alert-feed::-webkit-scrollbar { width: 6px; }
+.alert-feed::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+/* Individual Alert Card */
+.alert-card {
+  padding: 16px;
+  display: flex; flex-direction: column; gap: 8px;
+  border-left: 4px solid var(--color-level-med);
+  position: relative;
+  overflow: hidden;
+}
+.alert-card.quake { border-left-color: var(--color-hazard-quake); }
+.alert-card.tsunami { border-left-color: var(--color-hazard-tsunami); }
+.alert-card.fire { border-left-color: var(--color-hazard-fire); }
+.alert-card.hurricane { border-left-color: var(--color-hazard-hurricane); }
+.alert-card.volcano { border-left-color: var(--color-hazard-volcano); }
+.alert-card.air { border-left-color: var(--color-hazard-air); }
+
+.alert-card-header { display: flex; justify-content: space-between; align-items: center; }
+.hazard-title { display: flex; align-items: center; gap: 8px; font-weight: bold; text-transform: uppercase; font-size: 0.9rem;}
+.alert-meta { color: var(--color-text-muted); font-size: 0.8rem; display: flex; align-items: center; gap: 4px;}
+
+.alert-value { font-size: 1.8rem; font-weight: 700; line-height: 1; margin: 4px 0; }
+.alert-location { font-weight: 500; font-size: 0.95rem; }
+
+.btn-dismiss {
+  position: absolute; top: 12px; right: 12px;
+  background: transparent; border: none; color: var(--color-text-muted);
+  cursor: pointer; padding: 4px; border-radius: 4px;
+}
+.btn-dismiss:hover { background: rgba(255,255,255,0.1); color: white; }
+
+/* Simulator Controls */
+.simulator-panel {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.simulator-panel h3 { grid-column: span 3; font-size: 0.9rem; margin-bottom: 8px; color: var(--color-text-muted); text-align: center; }
+
+.btn-sim {
+  padding: 10px 4px;
+  border: none; border-radius: 8px;
+  font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s;
+  background: rgba(255,255,255,0.05); color: white;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.btn-sim:hover { transform: translateY(-2px); }
+.btn-sim.quake { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); }
+.btn-sim.tsunami { background: rgba(14, 165, 233, 0.15); border: 1px solid rgba(14, 165, 233, 0.3); }
+.btn-sim.fire { background: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.3); }
+.btn-sim.hurricane { background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3); }
+.btn-sim.volcano { background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); }
+.btn-sim.air { background: rgba(100, 116, 139, 0.15); border: 1px solid rgba(100, 116, 139, 0.3); }
+
+/* Map Toggle Button */
+.btn-icon {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-icon:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+/* 📱 Mobile Optimization */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: 55vh;
+    border-radius: 24px 24px 0 0;
+    padding: 12px;
+    gap: 8px;
+    background: var(--color-bg-base); 
+    border-top: var(--glass-border);
+  }
+  
+  .glass-panel {
+    background: rgba(22, 25, 33, 0.95);
+  }
+
+  .header-panel {
+    padding: 12px 16px;
+  }
+  
+  .header-title h1 {
+    font-size: 1rem;
+  }
+
+  .alert-card {
+    padding: 12px;
+  }
+  
+  .alert-value {
+    font-size: 1.5rem;
+  }
+
+  .simulator-panel {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 12px;
+  }
+
+  .btn-sim {
+    padding: 8px 4px;
+    font-size: 0.75rem;
+  }
+}
