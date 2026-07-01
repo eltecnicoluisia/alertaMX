@@ -143,12 +143,20 @@ function App() {
   }, [activeEvents.length]);
 
   const triggerSystemNotification = (title, body) => {
-    if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification(title, {
-        body,
-        icon: '/pwa-192x192.png',
-        vibrate: [200, 100, 200, 100, 200]
-      });
+    try {
+      if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+        new Notification(title, { body, icon: '/favicon.ico' });
+      }
+    } catch (e) {
+      console.warn('Error al enviar notificación:', e);
+    }
+
+    try {
+      if (navigator.vibrate) {
+        navigator.vibrate([200, 100, 200, 100, 200]);
+      }
+    } catch (e) {
+      console.warn('Vibración no soportada', e);
     }
   };
 
