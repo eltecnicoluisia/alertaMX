@@ -139,6 +139,7 @@ function App() {
         return event;
       }));
     }, 1000);
+    
     return () => clearInterval(interval);
   }, [activeEvents.length]);
 
@@ -175,9 +176,11 @@ function App() {
         osc.frequency.linearRampToValueAtTime(800, audioCtx.currentTime + 1);
         osc.frequency.linearRampToValueAtTime(400, audioCtx.currentTime + 2);
       } else {
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.5);
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+        osc.frequency.linearRampToValueAtTime(1200, audioCtx.currentTime + 0.3);
+        osc.frequency.linearRampToValueAtTime(800, audioCtx.currentTime + 0.6);
+        osc.frequency.linearRampToValueAtTime(1200, audioCtx.currentTime + 0.9);
       }
       
       osc.connect(gain);

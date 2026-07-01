@@ -265,8 +265,7 @@ html, body {
   .map-container {
     position: fixed;
     top: 0; left: 0; right: 0;
-    bottom: 52vh;
-    min-bottom: 300px;
+    height: 48vh; /* 100vh total - 52vh del sidebar = 48vh. Así el centro es el centro VISIBLE */
     z-index: 1;
   }
 
