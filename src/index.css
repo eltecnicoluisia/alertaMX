@@ -34,6 +34,8 @@ html, body {
   background-color: var(--color-bg-base);
   color: var(--color-text-main);
   height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;
@@ -254,8 +256,10 @@ html, body {
   /* El contenedor principal apila mapa arriba, panel abajo */
   .app-container {
     flex-direction: column;
-    height: 100dvh; /* dynamic viewport height — respeta la barra de Chrome */
+    height: 100dvh;
+    height: 100vh; /* fallback */
     overflow: hidden;
+    background: var(--color-bg-base);
   }
 
   /* El mapa ocupa el espacio restante encima del panel */
@@ -268,25 +272,25 @@ html, body {
 
   /* ── Bottom Sheet ── */
   .sidebar {
-    /* Posición normal en el flujo, no absolute */
     position: relative;
     width: 100%;
     top: unset; left: unset; right: unset; bottom: unset;
     z-index: 100;
 
-    /* Altura fija compacta por defecto */
+    /* Altura fija — el mapa toma el resto */
+    flex-shrink: 0;
     height: auto;
-    max-height: 48vh;
 
     flex-direction: column;
     gap: 0;
     padding: 0;
     pointer-events: auto;
 
-    background: var(--color-bg-panel-solid);
+    /* Fondo sólido oscuro — sin transparencia para evitar blanco */
+    background: #161921;
     border-top: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 20px 20px 0 0;
-    box-shadow: 0 -8px 40px rgba(0,0,0,0.6);
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.8);
 
     overflow: hidden;
     display: flex;
@@ -375,15 +379,18 @@ html, body {
   .simulator-panel {
     flex-shrink: 0;
     padding: 10px 12px 14px;
+    /* Relleno extra para el "home indicator" de iPhone y barra de Android */
+    padding-bottom: max(14px, env(safe-area-inset-bottom));
     gap: 8px;
-    background: rgba(0,0,0,0.2);
-    border-top: 1px solid rgba(255,255,255,0.07);
+    background: #0d1017; /* Más oscuro que el panel para diferenciarlo */
+    border-top: 1px solid rgba(255,255,255,0.09);
     border-radius: 0;
   }
 
   .simulator-panel h3 {
     font-size: 0.78rem;
     margin-bottom: 6px;
+    color: rgba(255,255,255,0.4);
   }
 
   .btn-sim {
