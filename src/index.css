@@ -1,75 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 :root {
   --color-bg-base: #0f1115;
-  --color-bg-panel: rgba(22, 25, 33, 0.75);
-  --color-bg-panel-hover: rgba(30, 34, 45, 0.85);
-  
+  --color-bg-panel: rgba(22, 25, 33, 0.92);
+  --color-bg-panel-solid: #161921;
+  --color-bg-card: rgba(30, 34, 45, 0.95);
+
   --color-text-main: #f3f4f6;
   --color-text-muted: #9ca3af;
-  
-  --color-level-low: #10b981; /* Green */
-  --color-level-med: #f59e0b; /* Orange/Yellow */
-  --color-level-high: #ef4444; /* Red */
-  
-  /* Hazard Specific Colors */
+
+  --color-level-low: #10b981;
+  --color-level-med: #f59e0b;
+  --color-level-high: #ef4444;
+
   --color-hazard-quake: #ef4444;
-  --color-hazard-tsunami: #0ea5e9; /* Light Blue */
-  --color-hazard-fire: #f97316; /* Orange */
-  --color-hazard-hurricane: #06b6d4; /* Cyan/Teal */
-  --color-hazard-volcano: #8b5cf6; /* Purple */
-  --color-hazard-air: #64748b; /* Slate Gray */
+  --color-hazard-tsunami: #0ea5e9;
+  --color-hazard-fire: #f97316;
+  --color-hazard-hurricane: #06b6d4;
+  --color-hazard-volcano: #8b5cf6;
+  --color-hazard-air: #64748b;
 
   --border-radius: 16px;
   --glass-border: 1px solid rgba(255, 255, 255, 0.08);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  --glass-blur: blur(12px);
-  
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color-scheme: dark;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-body {
+html, body {
   background-color: var(--color-bg-base);
   color: var(--color-text-main);
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 #root { height: 100%; width: 100%; }
 
-/* Glassmorphism */
+/* ─── Glassmorphism ─── */
 .glass-panel {
   background: var(--color-bg-panel);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: var(--glass-border);
   border-radius: var(--border-radius);
   box-shadow: var(--glass-shadow);
-  transition: all 0.3s ease;
 }
-.glass-panel:hover { background: var(--color-bg-panel-hover); }
 
-/* Animations */
+/* ─── Animations ─── */
 @keyframes pulse-ring {
   0% { transform: scale(0.8); opacity: 0.8; }
   100% { transform: scale(3.0); opacity: 0; }
 }
-
-@keyframes spin-slow {
-  100% { transform: rotate(360deg); }
-}
-
+@keyframes spin-slow { 100% { transform: rotate(360deg); } }
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-5px); }
 }
-
 @keyframes flash-screen {
   0% { background-color: rgba(239, 68, 68, 0); }
-  50% { background-color: rgba(239, 68, 68, 0.15); }
+  50% { background-color: rgba(239, 68, 68, 0.18); }
   100% { background-color: rgba(239, 68, 68, 0); }
+}
+@keyframes slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .flash-overlay {
@@ -78,7 +78,7 @@ body {
 }
 .flash-overlay.active { animation: flash-screen 1s infinite; }
 
-/* Custom Markers on Map */
+/* ─── Map Markers ─── */
 .custom-marker { background: transparent; border: none; }
 
 .hazard-marker {
@@ -94,7 +94,6 @@ body {
 .hazard-marker.hurricane { background-color: var(--color-hazard-hurricane); animation: spin-slow 4s linear infinite; }
 .hazard-marker.volcano { background-color: var(--color-hazard-volcano); animation: float 3s ease-in-out infinite; }
 .hazard-marker.air { background-color: var(--color-hazard-air); }
-
 .hazard-marker::after {
   content: ''; position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -120,14 +119,24 @@ body {
   animation: pulse-ring 3s infinite;
 }
 
-/* Map Theming */
+/* ─── Map Theming ─── */
 .leaflet-container { background: var(--color-bg-base) !important; }
-.leaflet-layer, .leaflet-control-zoom-in, .leaflet-control-zoom-out, .leaflet-control-attribution {
+.leaflet-layer,
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out,
+.leaflet-control-attribution {
   filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
 }
 
-/* Layout */
-.app-container { display: flex; height: 100vh; width: 100vw; position: relative; }
+/* ═══════════════════════════════════════════════
+   DESKTOP LAYOUT (>768px)
+═══════════════════════════════════════════════ */
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
 .map-container { flex: 1; height: 100%; }
 
 .sidebar {
@@ -149,18 +158,18 @@ body {
   flex: 1;
   overflow-y: auto;
   display: flex; flex-direction: column; gap: 12px;
-  padding-right: 8px; /* For scrollbar */
+  padding-right: 8px;
 }
 .alert-feed::-webkit-scrollbar { width: 6px; }
 .alert-feed::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
 
-/* Individual Alert Card */
+/* Alert Cards */
 .alert-card {
   padding: 16px;
   display: flex; flex-direction: column; gap: 8px;
   border-left: 4px solid var(--color-level-med);
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
+  animation: slide-up 0.3s ease;
 }
 .alert-card.quake { border-left-color: var(--color-hazard-quake); }
 .alert-card.tsunami { border-left-color: var(--color-hazard-tsunami); }
@@ -170,8 +179,8 @@ body {
 .alert-card.air { border-left-color: var(--color-hazard-air); }
 
 .alert-card-header { display: flex; justify-content: space-between; align-items: center; }
-.hazard-title { display: flex; align-items: center; gap: 8px; font-weight: bold; text-transform: uppercase; font-size: 0.9rem;}
-.alert-meta { color: var(--color-text-muted); font-size: 0.8rem; display: flex; align-items: center; gap: 4px;}
+.hazard-title { display: flex; align-items: center; gap: 8px; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; }
+.alert-meta { color: var(--color-text-muted); font-size: 0.8rem; display: flex; align-items: center; gap: 4px; }
 
 .alert-value { font-size: 1.8rem; font-weight: 700; line-height: 1; margin: 4px 0; }
 .alert-location { font-weight: 500; font-size: 0.95rem; }
@@ -183,25 +192,22 @@ body {
 }
 .btn-dismiss:hover { background: rgba(255,255,255,0.1); color: white; }
 
+/* WhatsApp buttons */
 .btn-whatsapp {
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  background-color: #25D366; /* WhatsApp Green */
-  color: white;
-  text-decoration: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.9rem;
+  background-color: #25D366;
+  color: white; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-weight: 600; font-size: 0.9rem;
   margin-top: 12px;
   transition: background-color 0.2s, transform 0.2s;
   box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
-.btn-whatsapp:hover {
-  background-color: #128C7E;
-  transform: translateY(-2px);
-}
+.btn-whatsapp:hover, .btn-whatsapp:active { background-color: #128C7E; transform: translateY(-1px); }
 
-/* Simulator Controls */
+/* Simulator */
 .simulator-panel {
   padding: 16px;
   display: grid;
@@ -217,84 +223,179 @@ body {
   cursor: pointer; transition: all 0.2s;
   background: rgba(255,255,255,0.05); color: white;
   display: flex; flex-direction: column; align-items: center; gap: 6px;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
-.btn-sim:hover { transform: translateY(-2px); }
-.btn-sim.quake { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); }
-.btn-sim.tsunami { background: rgba(14, 165, 233, 0.15); border: 1px solid rgba(14, 165, 233, 0.3); }
-.btn-sim.fire { background: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.3); }
-.btn-sim.hurricane { background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3); }
-.btn-sim.volcano { background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); }
-.btn-sim.air { background: rgba(100, 116, 139, 0.15); border: 1px solid rgba(100, 116, 139, 0.3); }
+.btn-sim:active { transform: scale(0.96); }
+.btn-sim.quake { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); }
+.btn-sim.tsunami { background: rgba(14,165,233,0.15); border: 1px solid rgba(14,165,233,0.3); }
+.btn-sim.fire { background: rgba(249,115,22,0.15); border: 1px solid rgba(249,115,22,0.3); }
+.btn-sim.hurricane { background: rgba(6,182,212,0.15); border: 1px solid rgba(6,182,212,0.3); }
+.btn-sim.volcano { background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.3); }
+.btn-sim.air { background: rgba(100,116,139,0.15); border: 1px solid rgba(100,116,139,0.3); }
 
 /* Map Toggle Button */
 .btn-icon {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
   color: white;
   width: 36px; height: 36px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s;
+  cursor: pointer; transition: all 0.2s;
 }
-.btn-icon:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.05);
-}
+.btn-icon:hover { background: rgba(255,255,255,0.2); transform: scale(1.05); }
 
-/* 📱 Mobile Optimization */
+/* ═══════════════════════════════════════════════
+   MOBILE LAYOUT (≤768px) — Bottom Sheet Pattern
+═══════════════════════════════════════════════ */
 @media (max-width: 768px) {
+
+  /* El contenedor principal apila mapa arriba, panel abajo */
   .app-container {
     flex-direction: column;
+    height: 100dvh; /* dynamic viewport height — respeta la barra de Chrome */
+    overflow: hidden;
   }
+
+  /* El mapa ocupa el espacio restante encima del panel */
+  .map-container {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Bottom Sheet ── */
   .sidebar {
+    /* Posición normal en el flujo, no absolute */
+    position: relative;
     width: 100%;
-    top: auto;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    max-height: 55vh;
-    border-radius: 24px 24px 0 0;
-    padding: 12px;
-    gap: 8px;
-    background: var(--color-bg-base); 
-    border-top: var(--glass-border);
-    pointer-events: auto; /* Fix para poder tocar el panel y no el mapa */
-  }
-  
-  .glass-panel {
-    background: rgba(22, 25, 33, 0.95);
+    top: unset; left: unset; right: unset; bottom: unset;
+    z-index: 100;
+
+    /* Altura fija compacta por defecto */
+    height: auto;
+    max-height: 48vh;
+
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    pointer-events: auto;
+
+    background: var(--color-bg-panel-solid);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.6);
+
+    overflow: hidden;
+    display: flex;
   }
 
+  /* Handle visual arriba del sheet */
+  .sidebar::before {
+    content: '';
+    display: block;
+    width: 40px; height: 4px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 2px;
+    margin: 10px auto 4px;
+    flex-shrink: 0;
+  }
+
+  /* Header compacto */
   .header-panel {
-    padding: 12px 16px;
+    padding: 8px 16px 10px;
+    border-radius: 0;
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
     flex-shrink: 0;
-  }
-  
-  .header-title h1 {
-    font-size: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
   }
 
-  .alert-card {
-    padding: 12px;
+  .glass-panel {
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
   }
-  
+
+  .header-title h1 { font-size: 1rem; }
+
+  /* Área scrollable (alertas) */
   .alert-feed {
+    flex: 1;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-  }
-  
-  .alert-value {
-    font-size: 1.5rem;
+    overscroll-behavior: contain;
+    padding: 10px 12px;
+    gap: 10px;
   }
 
+  .alert-feed::-webkit-scrollbar { display: none; }
+
+  /* Cards dentro del feed */
+  .alert-card {
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: var(--color-bg-card);
+    border: var(--glass-border);
+    margin: 0;
+  }
+
+  .alert-value { font-size: 1.5rem; }
+
+  .btn-dismiss {
+    top: 10px; right: 10px;
+    /* Área táctil mínima de 44px */
+    min-width: 44px; min-height: 44px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Botones WhatsApp en 2 columnas */
+  .btn-whatsapp {
+    font-size: 0.82rem;
+    padding: 10px 6px;
+    margin-top: 0;
+    min-height: 44px; /* Área táctil mínima */
+  }
+
+  /* Estado vacío más compacto */
+  .alert-feed .glass-panel {
+    background: rgba(255,255,255,0.04) !important;
+    border: var(--glass-border) !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+  }
+
+  /* Simulador siempre visible abajo */
   .simulator-panel {
-    grid-template-columns: repeat(3, 1fr);
-    padding: 12px;
     flex-shrink: 0;
+    padding: 10px 12px 14px;
+    gap: 8px;
+    background: rgba(0,0,0,0.2);
+    border-top: 1px solid rgba(255,255,255,0.07);
+    border-radius: 0;
+  }
+
+  .simulator-panel h3 {
+    font-size: 0.78rem;
+    margin-bottom: 6px;
   }
 
   .btn-sim {
-    padding: 8px 4px;
-    font-size: 0.75rem;
+    padding: 10px 4px;
+    font-size: 0.72rem;
+    gap: 4px;
+    border-radius: 10px;
+    min-height: 56px; /* Área táctil confortable */
+  }
+
+  /* Controles del mapa (zoom) más alejados del sheet */
+  .leaflet-control-zoom {
+    margin-bottom: 0 !important;
   }
 }
