@@ -30,8 +30,13 @@ export default function AlertPanel({ activeEvents, systemStatus, onTestAlert, on
           <div>
             <h1>Alertas MX</h1>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
-              <div style={{ width: 8, height: 8, borderRadius: '50%', background: systemStatus==='connected'?'#10b981':'#f59e0b' }} />
-              {systemStatus === 'connected' ? 'Centro de Mando Activo' : 'Conectando...'}
+              <div style={{ 
+                width: 8, height: 8, borderRadius: '50%', 
+                background: systemStatus==='connected'?'#10b981': systemStatus==='error'?'#ef4444' : '#f59e0b' 
+              }} />
+              {systemStatus === 'connected' ? 'Centro de Mando Activo' : 
+               systemStatus === 'error' ? 'Error de Conexión' : 
+               systemStatus === 'disconnected' ? 'Reconectando...' : 'Conectando...'}
             </div>
           </div>
         </div>
